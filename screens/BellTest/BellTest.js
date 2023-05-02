@@ -6,16 +6,21 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import { general,mainPage } from '../../config/styles/GeneralStyles';
-import { instructions } from '../../config/styles/BellTestStyles';
-import { FontAwesome } from '@expo/vector-icons';
 import BellTestInstructions from './BellTestInstructions'
 import ReturnHomeComponent from '../../components/ReturnHomeComponent'
 
 import IconContainer from './IconContainer'
+import { connect} from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width-20;
 const windowHeight = Dimensions.get('window').height-20-120;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer.user,
+    interviewer: state.userReducer.interviewer
+  }
+}
 
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
@@ -53,13 +58,14 @@ function generateIcons(addEvent,height,width){
   return shuffle(list)
 }
 
-export default class BellTest extends React.Component {
+class BellTest extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       bells: 0,
       mistakes: 0,
       listado: [],
+      results: [],
       height: windowHeight/10,
       width: windowWidth/16,
       visibleFinished: false,
@@ -77,14 +83,28 @@ export default class BellTest extends React.Component {
     }
   }
   addBell = () => {
-    this.setState({bells: this.state.bells + 1})
+    const user = this.props.user
+    const interviewer = this.props.interviewer
+    const results = this.state.results
+    const bells = this.state.bells
+    const mistakes = this.state.mistakes
+    results.push({user: user, interviewer: interviewer, bells: bells+1, mistakes: mistakes})
+    console.log("Bell")
+    this.setState({bells: this.state.bells + 1,results: results})
     if(this.state.bells == 9){
+      console.log(this.state.results)
       this.setState({visibleFinished: true})
     }
   }
 
   addMistake = () => {
-    this.setState({mistakes: this.state.mistakes + 1})
+    const user = this.props.user
+    const interviewer = this.props.interviewer
+    const results = this.state.results
+    const bells = this.state.bells
+    const mistakes = this.state.mistakes
+    results.push({user: user, interviewer: interviewer, bells: bells, mistakes: mistakes+1})
+    this.setState({mistakes: this.state.mistakes + 1,results: results})
     console.log("Mistake")
   }
   setInvisible =()=>{
@@ -105,3 +125,5 @@ export default class BellTest extends React.Component {
       );
   }
 };
+
+export default connect(mapStateToProps)(BellTest);

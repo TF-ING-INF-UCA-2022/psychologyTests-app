@@ -127,10 +127,6 @@ class HomeScreen extends React.Component{
               <FontAwesome name="cube" size={35} color={colors.white}/>
               <Text style={general.textStyle}>{TestsNames.corsiTest}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[mainPage.button,{flexDirection:"row"}]} onPress={() => this.selectTest('camelTest')} delayPressIn={0}>
-              <FontAwesome name="image" size={35} color={colors.white}/>
-              <Text style={general.textStyle}>{TestsNames.camelTest}</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={[mainPage.button,{flexDirection:"row"}]} onPress={() => this.selectTest('cardTest')} delayPressIn={0}>
             <MaterialCommunityIcons name="cards" size={35} color={colors.white}/>
               <Text style={general.textStyle}>{TestsNames.cardTest}</Text>
