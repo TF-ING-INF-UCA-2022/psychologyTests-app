@@ -2,7 +2,7 @@
   "name": "psychologytests",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo-cli doctor --fix-dependencies",
+    "start": "expo start --dev-clien",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "set NODE_OPTIONS=--openssl-legacy-provider && expo start --web"
